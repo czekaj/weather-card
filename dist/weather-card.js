@@ -176,7 +176,7 @@ class WeatherCard extends LitElement {
           ? html` <span class="title"> ${this._config.name} </span> `
           : ""}
         <span class="temp">${this.getUnit("temperature") == "°F"
-            ? Math.round(tempStateObj.state)
+            ? tempStateObj.state
             : tempStateObj.state}</span>
         <span class="tempc"> ${this.getUnit("temperature")}</span>
       </div>
