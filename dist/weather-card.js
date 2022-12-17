@@ -129,6 +129,7 @@ class WeatherCard extends LitElement {
 
     const lang = this.hass.selectedLanguage || this.hass.language;
     const stateObj = this.hass.states[this._config.entity];
+    const tempStateObj = this.hass.states[this._config.temp_entity];
 
     if (!stateObj) {
       return html`
@@ -149,7 +150,7 @@ class WeatherCard extends LitElement {
 
     return html`
       <ha-card @click="${this._handleClick}">
-        ${this._config.current !== false ? this.renderCurrent(stateObj) : ""}
+        ${this._config.current !== false ? this.renderCurrent(stateObj, tempStateObj) : ""}
         ${this._config.details !== false ? this.renderDetails(stateObj, lang) : ""}
         ${this._config.forecast !== false
           ? this.renderForecast(stateObj.attributes.forecast, lang)
@@ -158,7 +159,7 @@ class WeatherCard extends LitElement {
     `;
   }
 
-  renderCurrent(stateObj) {
+  renderCurrent(stateObj, tempStateObj) {
     this.numberElements++;
 
     return html`
@@ -174,11 +175,9 @@ class WeatherCard extends LitElement {
         ${this._config.name
           ? html` <span class="title"> ${this._config.name} </span> `
           : ""}
-        <span class="temp"
-          >${this.getUnit("temperature") == "°F"
-            ? Math.round(stateObj.attributes.temperature)
-            : stateObj.attributes.temperature}</span
-        >
+        <span class="temp">${this.getUnit("temperature") == "°F"
+            ? Math.round(tempStateObj.state)
+            : tempStateObj.state}</span>
         <span class="tempc"> ${this.getUnit("temperature")}</span>
       </div>
     `;
