@@ -37,6 +37,10 @@ export class WeatherCardEditor extends LitElement {
     return this._config.entity || "";
   }
 
+  get _temp_entity() {
+    return this._config.temp_entity || "";
+  }  
+
   get _name() {
     return this._config.name || "";
   }
@@ -124,6 +128,33 @@ export class WeatherCardEditor extends LitElement {
                   </paper-listbox>
                 </paper-dropdown-menu>
               `}
+              ${customElements.get("ha-entity-picker")
+              ? html`
+                  <ha-entity-picker
+                    .hass="${this.hass}"
+                    .value="${this._temp_entity}"
+                    .configValue=${"temp_entity"}
+                    domain-filter="sensor"
+                    @change="${this._valueChanged}"
+                    allow-custom-entity
+                  ></ha-entity-picker>
+                `
+              : html`
+                  <paper-dropdown-menu
+                    label="Temperature Entity"
+                    @value-changed="${this._valueChanged}"
+                    .configValue="${"temp_entity"}"
+                  >
+                    <paper-listbox
+                      slot="dropdown-content"
+                      .selected="${entities.indexOf(this._temp_entity)}"
+                    >
+                      ${entities.map((entity) => {
+                        return html` <paper-item>${entity}</paper-item> `;
+                      })}
+                    </paper-listbox>
+                  </paper-dropdown-menu>
+                `}              
           <div class="switches">
             <div class="switch">
               <ha-switch
