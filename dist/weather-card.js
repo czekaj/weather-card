@@ -52,10 +52,10 @@ const windDirections = [
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "weather-card",
-  name: "Weather Card",
-  description: "A custom weather card with animated icons.",
+  name: "Weather Card w/ sensor support",
+  description: "A custom weather card with animated icons and support for custom temperature sensor.",
   preview: true,
-  documentationURL: "https://github.com/bramkragten/weather-card",
+  documentationURL: "https://github.com/czekaj/weather-card",
 });
 
 const fireEvent = (node, type, detail, options) => {
